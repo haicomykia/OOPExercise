@@ -7,10 +7,13 @@ public class App {
 
 	public static void main(String[] args) {
 		
-		var taro = new Customer("太郎", WarrantyEnum.FIVE_YEARS_WARRANTY, LocalDate.of(2022, 12, 17));
+		var taro = Customer.of("太郎");
+		taro.subscribeWarranty(WarrantyEnum.FIVE_YEARS_WARRANTY, LocalDate.now());
+//		taro.cancelWarranty();
 		
 		for (WarrantyEnum warranty : WarrantyEnum.values()) {
 			if (warranty.hasSubscribed(taro)) {
+				System.out.println(warranty.getEndOfPeriod(taro));
 				System.out.println(warranty.getWarratyName());
 				break;
 			}

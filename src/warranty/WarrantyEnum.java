@@ -4,6 +4,9 @@ import java.time.LocalDate;
 
 import customer.Customer;
 
+/**
+ * 保証の列挙体
+ */
 public enum WarrantyEnum implements IWarranty {
 	
 	/**
@@ -100,12 +103,12 @@ public enum WarrantyEnum implements IWarranty {
 			return false;
 		}
 		
-		// 解約済み
-		if (LocalDate.now().isAfter(customer.getCancelDate())) {
+		// 解約済み		
+		if (LocalDate.now().compareTo(customer.getCancelDate()) >= 0) {
 			return false;
 		}
 		
-		if (LocalDate.now().isAfter(getEndOfPeriod(customer))) {
+		if (LocalDate.now().compareTo(getEndOfPeriod(customer)) >= 0) {
 			return false;
 		}
 		
