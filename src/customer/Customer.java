@@ -3,6 +3,9 @@ import java.time.LocalDate;
 
 import warranty.WarrantyEnum;
 
+/**
+ * 顧客オブジェクト
+ */
 public class Customer {
 	
 	/**
@@ -13,7 +16,7 @@ public class Customer {
 	/**
 	 * 加入している保証
 	 */
-	private WarrantyEnum warraty = WarrantyEnum.NONE;
+	private WarrantyEnum warraty;
 	
 	/**
 	 * 保証開始日
@@ -23,10 +26,31 @@ public class Customer {
 	/*
 	 * 保証解約日
 	 */
-	private LocalDate cancelDate = this.warraty.getEndOfPeriod(this);
+	private LocalDate cancelDate;
 	
-	public Customer(String name, WarrantyEnum warranty, LocalDate startDate) {
+	private Customer(String name, WarrantyEnum warranty, LocalDate startDate) {
 		this.name = name;
+		this.warraty = warranty;
+		this.startDate = startDate;
+		this.cancelDate = warranty.getEndOfPeriod(this);
+	}
+	
+	/**
+	 * 顧客オブジェクトのファクトリメソッド
+	 * @param name 顧客名
+	 * @return 顧客オブジェクトのインスタンス
+	 */
+	static public Customer of(String name) {
+		return new Customer(name, WarrantyEnum.BASIC_WARRANTY, LocalDate.now());
+	}
+	
+	/**
+	 * 保証に加入
+	 * @param warranty 加入する保証
+	 * @param startDate 開始日
+	 * @return 顧客クラスのインスタンス
+	 */
+	public void subscribeWarranty(WarrantyEnum warranty, LocalDate startDate) {
 		this.warraty = warranty;
 		this.startDate = startDate;
 	}
@@ -53,5 +77,12 @@ public class Customer {
 	 */
 	public boolean hasSubscribed(WarrantyEnum warranty) {
 		return this.warraty == warranty;
+	}
+	
+	/**
+	 * 解約
+	 */
+	public void cancelWarranty() {
+		this.cancelDate = LocalDate.now();
 	}
 }
