@@ -8,7 +8,7 @@ public class App {
 	public static void main(String[] args) {
 		
 		var taro = Customer.of("太郎");
-		taro.subscribeWarranty(WarrantyEnum.FIVE_YEARS_WARRANTY, LocalDate.now());
+		taro.subscribeWarranty(WarrantyEnum.THEERY_YEARS_WARRANTY, LocalDate.now());
 //		taro.cancelWarranty();
 		
 		for (WarrantyEnum warranty : WarrantyEnum.values()) {

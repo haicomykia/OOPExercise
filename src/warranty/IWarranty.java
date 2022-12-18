@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import customer.Customer;
 
 interface IWarranty {
+	
 	/**
 	 * 加入期間の終了日を返す
 	 * @return 加入期間の終了日

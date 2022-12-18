@@ -12,10 +12,10 @@ public enum WarrantyEnum implements IWarranty {
 	/**
 	 * なし
 	 */
-	NONE {
+	NONE {		
 		@Override
 		public LocalDate getEndOfPeriod(Customer customer) {
-			return LocalDate.now();
+			return customer.getStartDate();
 		}
 		
 		@Override
@@ -34,7 +34,7 @@ public enum WarrantyEnum implements IWarranty {
 	BASIC_WARRANTY {
 		@Override
 		public LocalDate getEndOfPeriod(Customer customer) {
-			return customer.getStartDate().plusMonths(12);
+			return customer.getStartDate().plusYears(1);
 		}
 		
 		@Override
@@ -53,7 +53,7 @@ public enum WarrantyEnum implements IWarranty {
 	THEERY_YEARS_WARRANTY {
 		@Override
 		public LocalDate getEndOfPeriod(Customer customer) {
-			return customer.getStartDate().plusMonths(36);
+			return customer.getStartDate().plusYears(3);
 		}
 		
 		@Override
@@ -73,7 +73,7 @@ public enum WarrantyEnum implements IWarranty {
 	FIVE_YEARS_WARRANTY {
 		@Override
 		public LocalDate getEndOfPeriod(Customer customer) {
-			return customer.getStartDate().plusMonths(60);
+			return customer.getStartDate().plusYears(5);
 		}
 		
 		@Override
@@ -87,31 +87,21 @@ public enum WarrantyEnum implements IWarranty {
 		}
 	};
 	
-	
 	@Override
 	public boolean hasSubscribed(Customer customer) {
 		
 		if (!customer.hasSubscribed(this)) {
 			return false;
 		}
+
+		LocalDate endDate = customer.getCancelDate().isBefore(this.getEndOfPeriod(customer)) ? 
+							customer.getCancelDate() : 
+							this.getEndOfPeriod(customer);
 		
-//		if (customer.getWarraty() != this) {
-//			return false;
-//		}
-		
-		if (LocalDate.now().isBefore(customer.getStartDate())) {
-			return false;
+		if (LocalDate.now().compareTo(customer.getStartDate()) >= 0 && LocalDate.now().compareTo(endDate) < 0) {
+			return true;
 		}
 		
-		// 解約済み		
-		if (LocalDate.now().compareTo(customer.getCancelDate()) >= 0) {
-			return false;
-		}
-		
-		if (LocalDate.now().compareTo(getEndOfPeriod(customer)) >= 0) {
-			return false;
-		}
-		
-		return true;
+		return false;
 	}
 }
