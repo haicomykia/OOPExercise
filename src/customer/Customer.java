@@ -76,7 +76,19 @@ public class Customer {
 	 * @return ユーザーが保証に加入しているか？
 	 */
 	public boolean hasSubscribed(WarrantyEnum warranty) {
-		return this.warraty == warranty;
+		if (this.warraty != warranty) {
+			return false;
+		}
+		
+		LocalDate endDate = this.cancelDate.isBefore(warranty.getEndOfPeriod(this)) ? 
+							this.cancelDate : 
+							warranty.getEndOfPeriod(this);
+		
+		if (LocalDate.now().compareTo(this.startDate) >= 0 && LocalDate.now().compareTo(endDate) < 0) {
+			return true;
+		}
+		
+		return false;
 	}
 	
 	/**

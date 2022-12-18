@@ -23,11 +23,4 @@ interface IWarranty {
 	 * @return 保証の名前
 	 */
 	public String getWarratyName();
-	
-	/**
-	 * 顧客が当該保証に申し込んでいて、期間内か？
-	 * @param customer 顧客
-	 * @return 当該保証に申し込んでいて、期間内か？
-	 */
-	public boolean hasSubscribed(Customer customer);
 }

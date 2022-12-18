@@ -9,10 +9,10 @@ public class App {
 		
 		var taro = Customer.of("太郎");
 		taro.subscribeWarranty(WarrantyEnum.THEERY_YEARS_WARRANTY, LocalDate.now());
-//		taro.cancelWarranty();
+		taro.cancelWarranty();
 		
 		for (WarrantyEnum warranty : WarrantyEnum.values()) {
-			if (warranty.hasSubscribed(taro)) {
+			if (taro.hasSubscribed(warranty)) {
 				System.out.println(warranty.getEndOfPeriod(taro));
 				System.out.println(warranty.getWarratyName());
 				break;

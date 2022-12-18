@@ -86,22 +86,4 @@ public enum WarrantyEnum implements IWarranty {
 			return "5年保証";
 		}
 	};
-	
-	@Override
-	public boolean hasSubscribed(Customer customer) {
-		
-		if (!customer.hasSubscribed(this)) {
-			return false;
-		}
-
-		LocalDate endDate = customer.getCancelDate().isBefore(this.getEndOfPeriod(customer)) ? 
-							customer.getCancelDate() : 
-							this.getEndOfPeriod(customer);
-		
-		if (LocalDate.now().compareTo(customer.getStartDate()) >= 0 && LocalDate.now().compareTo(endDate) < 0) {
-			return true;
-		}
-		
-		return false;
-	}
 }
