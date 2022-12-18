@@ -32,7 +32,7 @@ public class Customer {
 		this.name = name;
 		this.warraty = warranty;
 		this.startDate = startDate;
-		this.cancelDate = warranty.getEndOfPeriod(this);
+		this.cancelDate = null;
 	}
 	
 	/**
@@ -80,11 +80,18 @@ public class Customer {
 			return false;
 		}
 		
-		LocalDate endDate = this.cancelDate.isBefore(warranty.getEndOfPeriod(this)) ? 
-							this.cancelDate : 
-							warranty.getEndOfPeriod(this);
+		// 解約していない
+		if (cancelDate == null) {
+			LocalDate endDate = warranty.getEndOfPeriod(this);
+			if (LocalDate.now().compareTo(startDate) >= 0 && LocalDate.now().compareTo(endDate) <= 0) {
+				return true;
+			}
+			
+			return false;
+		}
 		
-		if (LocalDate.now().compareTo(this.startDate) >= 0 && LocalDate.now().compareTo(endDate) < 0) {
+		// 解約
+		if (LocalDate.now().compareTo(this.startDate) >= 0 && LocalDate.now().compareTo(cancelDate) < 0) {
 			return true;
 		}
 		
