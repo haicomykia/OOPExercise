@@ -29,5 +29,5 @@ interface IWarranty {
 	 * @param customer 顧客オブジェクト
 	 * @return ユーザーが保証に加入していて期間内か？
 	 */
-	public boolean isAgaint(Customer customer);
+	public boolean isAgainst(Customer customer);
 }

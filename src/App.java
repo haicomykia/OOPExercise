@@ -8,11 +8,11 @@ public class App {
 	public static void main(String[] args) {
 		
 		var taro = Customer.of("太郎");
-		taro.subscribeWarranty(WarrantyEnum.BASIC_WARRANTY, LocalDate.of(2021, 12, 20));
+		taro.subscribeWarranty(WarrantyEnum.BASIC_WARRANTY, LocalDate.of(2021, 12, 21));
 //		taro.cancelWarranty();
 		
 		for (WarrantyEnum warranty : WarrantyEnum.values()) {
-			if (warranty.isAgaint(taro)) {
+			if (warranty.isAgainst(taro)) {
 				System.out.println(warranty.getEndOfPeriod(taro));
 				System.out.println(warranty.getWarratyName());
 				break;

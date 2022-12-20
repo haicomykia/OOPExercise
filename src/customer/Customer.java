@@ -85,4 +85,24 @@ public class Customer {
 	public void cancelWarranty() {
 		this.cancelDate = LocalDate.now();
 	}
+	
+	/**
+	 * 保証開始日を過ぎているか？
+	 * @return 保証開始日 >= 今日か？
+	 */
+	public boolean startDateHasPassed() {
+		return this.startDate.compareTo(LocalDate.now()) <= 0;
+	}
+	
+	/**
+	 * 保証期間内か？
+	 * @return 保証期間終了日を過ぎているか？
+	 */
+	public boolean hasExpiredWarranty() {
+		if (this.cancelDate == null) {
+			return LocalDate.now().compareTo(this.warranty.getEndOfPeriod(this)) > 0;
+		}
+		
+		return LocalDate.now().compareTo(cancelDate) >= 0;
+	}
 }
