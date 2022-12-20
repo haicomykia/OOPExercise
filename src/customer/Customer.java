@@ -54,22 +54,6 @@ public class Customer {
 		this.warranty = warranty;
 		this.startDate = startDate;
 	}
-	
-	public WarrantyEnum getWarraty() {
-		return warranty;
-	}
-
-	public LocalDate getStartDate() {
-		return startDate;
-	}
-
-	public LocalDate getCancelDate() {
-		return cancelDate;
-	}
-
-	public String getName() {
-		return name;
-	}
 
 	/**
 	 * ユーザーが保証に加入しているか
