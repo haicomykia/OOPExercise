@@ -35,6 +35,15 @@ public class Customer {
 		this.cancelDate = null;
 	}
 	
+	
+	/**
+	 * 保証開始日を取得
+	 * @return 保証開始日
+	 */
+	public LocalDate getStartDate() {
+		return startDate;
+	}
+
 	/**
 	 * 顧客オブジェクトのファクトリメソッド
 	 * @param name 顧客名
