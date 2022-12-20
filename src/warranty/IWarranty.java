@@ -23,4 +23,11 @@ interface IWarranty {
 	 * @return 保証の名前
 	 */
 	public String getWarratyName();
+	
+	/**
+	 * ユーザーが保証に加入しているか
+	 * @param customer 顧客オブジェクト
+	 * @return ユーザーが保証に加入していて期間内か？
+	 */
+	public boolean isAgaint(Customer customer);
 }

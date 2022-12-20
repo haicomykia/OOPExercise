@@ -16,7 +16,7 @@ public class Customer {
 	/**
 	 * 加入している保証
 	 */
-	private WarrantyEnum warraty;
+	private WarrantyEnum warranty;
 	
 	/**
 	 * 保証開始日
@@ -30,7 +30,7 @@ public class Customer {
 	
 	private Customer(String name, WarrantyEnum warranty, LocalDate startDate) {
 		this.name = name;
-		this.warraty = warranty;
+		this.warranty = warranty;
 		this.startDate = startDate;
 		this.cancelDate = null;
 	}
@@ -51,12 +51,12 @@ public class Customer {
 	 * @return 顧客クラスのインスタンス
 	 */
 	public void subscribeWarranty(WarrantyEnum warranty, LocalDate startDate) {
-		this.warraty = warranty;
+		this.warranty = warranty;
 		this.startDate = startDate;
 	}
 	
 	public WarrantyEnum getWarraty() {
-		return warraty;
+		return warranty;
 	}
 
 	public LocalDate getStartDate() {
@@ -76,26 +76,7 @@ public class Customer {
 	 * @return ユーザーが保証に加入しているか？
 	 */
 	public boolean hasSubscribed(WarrantyEnum warranty) {
-		if (this.warraty != warranty) {
-			return false;
-		}
-		
-		// 解約していない
-		if (cancelDate == null) {
-			LocalDate endDate = warranty.getEndOfPeriod(this);
-			if (LocalDate.now().compareTo(startDate) >= 0 && LocalDate.now().compareTo(endDate) <= 0) {
-				return true;
-			}
-			
-			return false;
-		}
-		
-		// 解約
-		if (LocalDate.now().compareTo(this.startDate) >= 0 && LocalDate.now().compareTo(cancelDate) < 0) {
-			return true;
-		}
-		
-		return false;
+		return this.warranty == warranty;
 	}
 	
 	/**

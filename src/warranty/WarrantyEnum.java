@@ -86,4 +86,32 @@ public enum WarrantyEnum implements IWarranty {
 			return "5年保証";
 		}
 	};
+	
+	@Override
+	public boolean isAgaint(Customer customer) {
+		if (!customer.hasSubscribed(this)) {
+			return false;
+		}
+		
+		if (LocalDate.now().compareTo(customer.getStartDate()) < 0) {
+			return false;
+		}
+		
+		// 解約していない
+		if (customer.getCancelDate() == null) {
+			LocalDate endDate = this.getEndOfPeriod(customer);
+			if (!endDate.isAfter(LocalDate.now())) {
+				return true;
+			}
+			
+			return false;
+		}
+		
+		// 解約
+		if (!customer.getCancelDate().isAfter(LocalDate.now())) {
+			return true;
+		}
+		
+		return false;
+	}
 }
