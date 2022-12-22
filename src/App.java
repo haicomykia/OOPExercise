@@ -12,8 +12,7 @@ public class App {
 //		taro.cancelWarranty();
 		
 		for (WarrantyEnum warranty : WarrantyEnum.values()) {
-			if (warranty.isAgainst(taro)) {
-				System.out.println(warranty.getEndOfPeriod(taro));
+			if (taro.isUnder(warranty)) {
 				System.out.println(warranty.getWarratyName());
 				break;
 			}

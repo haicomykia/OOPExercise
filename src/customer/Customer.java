@@ -41,7 +41,7 @@ public class Customer {
 	 * @return 保証開始日
 	 */
 	public LocalDate getStartDate() {
-		return startDate;
+		return this.startDate;
 	}
 
 	/**
@@ -63,12 +63,28 @@ public class Customer {
 		this.warranty = warranty;
 		this.startDate = startDate;
 	}
+	
+	public boolean isUnder(WarrantyEnum warranty) {
+		if (!this.hasSubscribed(warranty)) {
+			return false;
+		}
+		
+		if (!this.startDateHasPassed()) {
+			return false;
+		}
+		
+		if (!this.hasExpiredWarranty()) {
+			return true;
+		}
+		
+		return false;
+	}
 
 	/**
 	 * ユーザーが保証に加入しているか
 	 * @return ユーザーが保証に加入しているか？
 	 */
-	public boolean hasSubscribed(WarrantyEnum warranty) {
+	private boolean hasSubscribed(WarrantyEnum warranty) {
 		return this.warranty == warranty;
 	}
 	
@@ -83,19 +99,20 @@ public class Customer {
 	 * 保証開始日を過ぎているか？
 	 * @return 保証開始日 >= 今日か？
 	 */
-	public boolean startDateHasPassed() {
-		return this.startDate.compareTo(LocalDate.now()) <= 0;
+	private boolean startDateHasPassed() {
+		return LocalDate.now().compareTo(this.startDate) >= 0;
 	}
 	
 	/**
 	 * 保証期間内か？
 	 * @return 保証期間終了日を過ぎているか？
 	 */
-	public boolean hasExpiredWarranty() {
+	private boolean hasExpiredWarranty() {
 		if (this.cancelDate == null) {
-			return LocalDate.now().compareTo(this.warranty.getEndOfPeriod(this)) > 0;
+			LocalDate endDate = this.startDate.plusYears(this.warranty.getYearsOfWarranty());
+			return LocalDate.now().compareTo(endDate) > 0;
 		}
 		
-		return LocalDate.now().compareTo(cancelDate) >= 0;
+		return LocalDate.now().compareTo(this.cancelDate) >= 0;
 	}
 }

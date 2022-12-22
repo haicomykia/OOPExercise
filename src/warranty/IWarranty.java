@@ -1,16 +1,11 @@
 package warranty;
 
-import java.time.LocalDate;
-
-import customer.Customer;
-
 interface IWarranty {
-	
 	/**
-	 * 加入期間の終了日を返す
-	 * @return 加入期間の終了日
+	 * 加入期間の年数を返す
+	 * @return 加入期間の年数
 	 */
-	public LocalDate getEndOfPeriod(Customer customer);
+	public int getYearsOfWarranty();
 	
 	/**
 	 * 保証コードを返す
@@ -23,11 +18,4 @@ interface IWarranty {
 	 * @return 保証の名前
 	 */
 	public String getWarratyName();
-	
-	/**
-	 * ユーザーが保証に加入しているか
-	 * @param customer 顧客オブジェクト
-	 * @return ユーザーが保証に加入していて期間内か？
-	 */
-	public boolean isAgainst(Customer customer);
 }

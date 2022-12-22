@@ -1,9 +1,5 @@
 package warranty;
 
-import java.time.LocalDate;
-
-import customer.Customer;
-
 /**
  * 保証の列挙体
  */
@@ -14,8 +10,8 @@ public enum WarrantyEnum implements IWarranty {
 	 */
 	NONE {		
 		@Override
-		public LocalDate getEndOfPeriod(Customer customer) {
-			return customer.getStartDate();
+		public int getYearsOfWarranty() {
+			return 0;
 		}
 		
 		@Override
@@ -33,8 +29,8 @@ public enum WarrantyEnum implements IWarranty {
 	 */
 	BASIC_WARRANTY {
 		@Override
-		public LocalDate getEndOfPeriod(Customer customer) {
-			return customer.getStartDate().plusYears(1);
+		public int getYearsOfWarranty() {
+			return 1;
 		}
 		
 		@Override
@@ -52,8 +48,8 @@ public enum WarrantyEnum implements IWarranty {
 	 */
 	THEERY_YEARS_WARRANTY {
 		@Override
-		public LocalDate getEndOfPeriod(Customer customer) {
-			return customer.getStartDate().plusYears(3);
+		public int getYearsOfWarranty() {
+			return 3;
 		}
 		
 		@Override
@@ -72,8 +68,8 @@ public enum WarrantyEnum implements IWarranty {
 	 */
 	FIVE_YEARS_WARRANTY {
 		@Override
-		public LocalDate getEndOfPeriod(Customer customer) {
-			return customer.getStartDate().plusYears(5);
+		public int getYearsOfWarranty() {
+			return 5;
 		}
 		
 		@Override
@@ -86,21 +82,4 @@ public enum WarrantyEnum implements IWarranty {
 			return "5年保証";
 		}
 	};
-	
-	@Override
-	public boolean isAgainst(Customer customer) {
-		if (!customer.hasSubscribed(this)) {
-			return false;
-		}
-		
-		if (!customer.startDateHasPassed()) {
-			return false;
-		}
-		
-		if (!customer.hasExpiredWarranty()) {
-			return true;
-		}
-		
-		return false;
-	}
 }
